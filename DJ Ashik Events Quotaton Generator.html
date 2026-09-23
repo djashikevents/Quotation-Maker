@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DJ Ashik Events - Official Quotation Generator</title>
+  <style>
+    :root {
+      --primary: #111827;
+      --accent: #e11d48;
+      --accent-gradient: linear-gradient(135deg, #f43f5e 0%, #be123c 100%);
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 16px;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .header-banner {
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .header-banner h1 {
+      color: #fff;
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+
+    .header-banner p {
+      margin: 4px 0 0 0;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      margin: 18px 0 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #cbd5e1;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px 10px;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: #fff;
+      border-radius: 6px;
+      font-size: 13px;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .btn {
+      background: var(--primary);
+      color: white;
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn:hover {
+      background: #334155;
+    }
+
+    .btn-accent {
+      background: var(--accent-gradient);
+      border: none;
+    }
+
+    .btn-accent:hover {
+      opacity: 0.9;
+    }
+
+    .btn-danger {
+      background: #ef4444;
+      border: none;
+      padding: 4px 8px;
+      font-size: 11px;
+    }
+
+    .toolbar-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    /* Day Card Controls */
+    .day-item-card {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    /* Preview Component Styling */
+    .preview-container {
+      background: #0f172a;
+      padding: 15px;
+      border-radius: 12px;
+    }
+
+    .preview-paper {
+      background: #ffffff;
+      color: #1e293b;
+      padding: 30px;
+      border-radius: 4px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 3px solid #e11d48;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+
+    .brand-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #0f172a;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: #64748b;
+      margin: 3px 0;
+      line-height: 1.4;
+    }
+
+    .quote-badge {
+      text-align: right;
+    }
+
+    .quote-badge h2 {
+      margin: 0;
+      font-size: 22px;
+      color: #e11d48;
+      letter-spacing: 1px;
+    }
+
+    .meta-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 12px 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 12px;
+    }
+
+    .meta-box p {
+      margin: 3px 0;
+    }
+
+    .meta-label {
+      font-weight: 700;
+      color: #e11d48;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    table.preview-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 15px;
+      font-size: 12px;
+    }
+
+    table.preview-table th {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 8px 10px;
+      text-align: left;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    table.preview-table td {
+      border-bottom: 1px solid #e2e8f0;
+      padding: 8px 10px;
+      vertical-align: top;
+    }
+
+    .pkg-title {
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .pkg-desc {
+      font-size: 10px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .totals-box {
+      width: 280px;
+      margin-left: auto;
+      margin-top: 15px;
+      font-size: 12px;
+    }
+
+    .totals-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .totals-row.grand-total {
+      border-top: 2px solid #0f172a;
+      border-bottom: 2px solid #0f172a;
+      font-weight: 800;
+      font-size: 14px;
+      color: #e11d48;
+      padding: 8px 0;
+    }
+
+    .quote-footer {
+      margin-top: 30px;
+      border-top: 1px dashed #cbd5e1;
+      padding-top: 12px;
+      font-size: 10px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    /* Mobile Responsive Layout */
+    @media (max-width: 900px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+      body {
+        padding: 10px;
+      }
+      .preview-paper {
+        padding: 15px;
+      }
+    }
+
+    /* Full Color PDF/Print Configuration */
+    @media print {
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      body {
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .main-grid {
+        display: block !important;
+      }
+      .no-print, .toolbar-row {
+        display: none !important;
+      }
+      .card {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        background: transparent !important;
+      }
+      .preview-container {
+        padding: 0 !important;
+        background: transparent !important;
+      }
+      .preview-paper {
+        box-shadow: none !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="main-grid">
+  <!-- Controls Form -->
+  <div class="card no-print">
+    <div class="header-banner">
+      <h1>DJ ASHIK EVENTS</h1>
+      <p>Lautoka, Fiji | Phone: 2855305 / 7206860 | Email: djashikevents@gmail.com</p>
+    </div>
+
+    <!-- JSON File Actions -->
+    <div class="toolbar-row">
+      <button class="btn btn-accent" onclick="window.print()">🖨️ Print / Save PDF</button>
+      <button class="btn" onclick="saveAsJSON()">💾 Save Booking</button>
+      <button class="btn" onclick="document.getElementById('fileInput').click()">📂 Load Booking</button>
+      <input type="file" id="fileInput" style="display:none;" accept=".json" onchange="loadFromJSON(event)">
+    </div>
+
+    <div class="section-title">Quotation Details</div>
+    <div class="grid-3">
+      <div class="form-group">
+        <label>Quotation #</label>
+        <input type="text" id="quoteNo" readonly style="background:#1e293b; color:#94a3b8;">
+      </div>
+      <div class="form-group">
+        <label>Issue Date</label>
+        <input type="date" id="issueDate" oninput="calculateValidity(); updatePreview();">
+      </div>
+      <div class="form-group">
+        <label>Valid Until Date (1 Month)</label>
+        <input type="date" id="validUntil" oninput="updatePreview();">
+      </div>
+    </div>
+
+    <div class="section-title">Client Details</div>
+    <div class="grid-2">
+      <div class="form-group">
+        <label>Customer Name</label>
+        <input type="text" id="custName" placeholder="Client Name" oninput="updatePreview()">
+      </div>
+      <div class="form-group">
+        <label>Phone / WhatsApp</label>
+        <input type="text" id="custPhone" placeholder="Contact Number" oninput="updatePreview()">
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="form-group">
+        <label>Event Type</label>
+        <select id="eventType" onchange="updatePreview()">
+          <option value="Birthday Party">Birthday Party</option>
+          <option value="Wedding">Wedding</option>
+          <option value="Engagement">Engagement</option>
+          <option value="Reception" selected>Reception</option>
+          <option value="Mehendi">Mehendi</option>
+          <option value="Anniversary">Anniversary</option>
+          <option value="Private Party">Private Party</option>
+          <option value="Corporate Event">Corporate Event</option>
+          <option value="Other Function">Other Function</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Venue Location</label>
+        <input type="text" id="venue" placeholder="e.g. Lautoka Venue" oninput="updatePreview()">
+      </div>
+    </div>
+
+    <!-- Multi-Day Event Schedule -->
+    <div class="section-title">
+      <span>Event Schedule & Package Selection</span>
+    </div>
+    <div id="dayControlsContainer"></div>
+    <button class="btn" onclick="addDayControl()">+ Add Day</button>
+
+    <!-- Custom Add-ons -->
+    <div class="section-title">Custom Add-Ons (Optional)</div>
+    <div id="addonContainer"></div>
+    <button class="btn" onclick="addAddonControl()">+ Add Extra Equipment / Service</button>
+
+    <!-- Deposit Options -->
+    <div class="section-title">Deposit & Discount Options</div>
+    <div class="grid-3">
+      <div class="form-group">
+        <label>Discount ($ FJD)</label>
+        <input type="number" id="discountVal" value="0" min="0" oninput="updatePreview()">
+      </div>
+      <div class="form-group">
+        <label>Deposit Requirement</label>
+        <select id="depositType" onchange="updatePreview()">
+          <option value="20">20% Deposit</option>
+          <option value="30">30% Deposit</option>
+          <option value="50" selected>50% Deposit</option>
+          <option value="fixed">Fixed Amount</option>
+        </select>
+      </div>
+      <div class="form-group" id="fixedDepositGroup" style="display:none;">
+        <label>Fixed Deposit ($ FJD)</label>
+        <input type="number" id="fixedDepositVal" value="100" min="0" oninput="updatePreview()">
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Quotation Preview -->
+  <div class="preview-container">
+    <div class="preview-paper" id="quotePaper">
+      <div class="preview-header">
+        <div>
+          <h1 class="brand-title">DJ ASHIK EVENTS</h1>
+          <p class="brand-sub">Premium Sound, Lighting & Entertainment Services</p>
+          <p class="brand-sub">Lautoka, Fiji | Phone: 2855305 / 7206860</p>
+          <p class="brand-sub">Email: djashikevents@gmail.com | Web: www.djashikevents.com</p>
+        </div>
+        <div class="quote-badge">
+          <h2>OFFICIAL QUOTATION</h2>
+          <p style="margin:2px 0; font-size:11px; font-weight:700;">Quote #: <span id="prevQuoteNo">DAE-2026-1001</span></p>
+          <p style="margin:2px 0; font-size:11px;">Issue Date: <span id="prevIssueDate">--</span></p>
+          <p style="margin:2px 0; font-size:11px; color:#e11d48; font-weight:600;">Valid Until: <span id="prevValidDate">--</span></p>
+        </div>
+      </div>
+
+      <div class="meta-box">
+        <div>
+          <div class="meta-label">Client Details</div>
+          <p><strong id="prevName">Client Name</strong></p>
+          <p>Phone: <span id="prevPhone">N/A</span></p>
+        </div>
+        <div>
+          <div class="meta-label">Event Details</div>
+          <p>Event Type: <strong id="prevEventType">Reception</strong></p>
+          <p>Venue: <span id="prevVenue">N/A</span></p>
+        </div>
+      </div>
+
+      <div class="meta-label" style="margin-bottom:6px;">Package Schedule</div>
+      <table class="preview-table">
+        <thead>
+          <tr>
+            <th style="width:15%;">Day</th>
+            <th style="width:20%;">Date & Time</th>
+            <th style="width:45%;">Package & Inclusions</th>
+            <th style="width:20%; text-align:right;">Amount (FJD)</th>
+          </tr>
+        </thead>
+        <tbody id="prevDaysTable"></tbody>
+      </table>
+
+      <div id="prevAddonSection" style="display:none;">
+        <div class="meta-label" style="margin-bottom:6px;">Extra Equipment & Add-Ons</div>
+        <table class="preview-table">
+          <thead>
+            <tr>
+              <th style="width:80%;">Description</th>
+              <th style="width:20%; text-align:right;">Amount (FJD)</th>
+            </tr>
+          </thead>
+          <tbody id="prevAddonTable"></tbody>
+        </table>
+      </div>
+
+      <div class="totals-box">
+        <div class="totals-row">
+          <span>Subtotal:</span>
+          <span id="prevSubtotal">$0.00</span>
+        </div>
+        <div class="totals-row" id="prevDiscountRow" style="display:none; color:#e11d48;">
+          <span>Discount:</span>
+          <span id="prevDiscount">-$0.00</span>
+        </div>
+        <div class="totals-row grand-total">
+          <span>Total Fee:</span>
+          <span id="prevTotal">$0.00</span>
+        </div>
+        <div class="totals-row" style="margin-top:5px; font-weight:700; color:#0f172a;">
+          <span>Deposit Required To Lock Date:</span>
+          <span id="prevDeposit">$0.00</span>
+        </div>
+        <div class="totals-row" style="color:#64748b;">
+          <span>Balance Payable On Event Day:</span>
+          <span id="prevBalance">$0.00</span>
+        </div>
+      </div>
+
+      <div class="quote-footer">
+        <p><strong>Terms & Booking Conditions:</strong></p>
+        <ul>
+          <li>This quotation is valid until the date specified above[cite: 1]. Prices are subject to revision after expiry.</li>
+          <li>A deposit is required upon booking confirmation to secure the date. Dates are allocated on a first-come, first-served basis.</li>
+          <li>Remaining balance must be settled on or prior to the event date.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Package definitions matching exact pricing and inclusions
+  const PACKAGES = {
+    'Basic Package': {
+      price: 200,
+      badge: 'Suitable for small gatherings',
+      items: ['DJ Entertainment', 'Sound System', 'Wired Microphones', '1 to 2 Hours Duration']
+    },
+    'Standard Package': {
+      price: 300,
+      badge: 'Perfect for birthdays, weddings & functions',
+      items: ['DJ Entertainment', 'Premium Sound System', 'Wireless Microphones', 'DMX Party Lighting', 'Smoke/Fog Effects', '3 to 4 Hours Duration']
+    },
+    'Premium Package': {
+      price: 500,
+      badge: 'For unforgettable celebrations',
+      items: ['DJ Entertainment', 'EMCEE Services', 'Premium Sound System', 'Wireless Microphones', 'DMX Party Lighting', 'Smoke/Fog Effects', '5 to 6 Hours Duration']
+    },
+    'Custom Package': {
+      price: 0,
+      badge: 'Tailored Event Setup',
+      items: ['Custom sound and lighting setup as requested']
+    }
+  };
+
+  let dayCounter = 0;
+  let addonCounter = 0;
+
+  // Auto-generate random quote number
+  function generateQuoteNo() {
+    const rand = Math.floor(1000 + Math.random() * 9000);
+    document.getElementById('quoteNo').value = `DAE-2026-${rand}`;
+  }
+
+  // Calculate issue date (today) and valid date (1 month from today)
+  function initDates() {
+    const today = new Date();
+    document.getElementById('issueDate').valueAsDate = today;
+    calculateValidity();
+  }
+
+  function calculateValidity() {
+    const issueVal = document.getElementById('issueDate').value;
+    if (!issueVal) return;
+    const issueDate = new Date(issueVal);
+    const validDate = new Date(issueDate);
+    validDate.setMonth(validDate.getMonth() + 1);
+    document.getElementById('validUntil').valueAsDate = validDate;
+  }
+
+  // Add Day Control Row
+  function addDayControl(data = null) {
+    dayCounter++;
+    const container = document.getElementById('dayControlsContainer');
+    const div = document.createElement('div');
+    div.className = 'day-item-card';
+    div.id = `dayControl_${dayCounter}`;
+
+    const defaultPkg = data ? data.package : 'Standard Package';
+    const defaultPrice = data ? data.price : PACKAGES[defaultPkg].price;
+
+    div.innerHTML = `
+      <div style="display:flex; justify-size:space-between; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <strong style="font-size:12px; color:var(--accent);">Day ${dayCounter} Schedule</strong>
+        <button class="btn btn-danger" onclick="removeDayControl(${dayCounter})">Remove</button>
+      </div>
+      <div class="grid-3">
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" class="day-date" value="${data ? data.date : ''}" oninput="updatePreview()">
+        </div>
+        <div class="form-group">
+          <label>Time / Duration</label>
+          <input type="text" class="day-time" placeholder="e.g. 6:00 PM - 10:00 PM" value="${data ? data.time : ''}" oninput="updatePreview()">
+        </div>
+        <div class="form-group">
+          <label>Select Package</label>
+          <select class="day-pkg" onchange="onPkgChange(${dayCounter})">
+            <option value="Basic Package" ${defaultPkg === 'Basic Package' ? 'selected' : ''}>Basic Package ($200)</option>
+            <option value="Standard Package" ${defaultPkg === 'Standard Package' ? 'selected' : ''}>Standard Package ($300)</option>
+            <option value="Premium Package" ${defaultPkg === 'Premium Package' ? 'selected' : ''}>Premium Package ($500)</option>
+            <option value="Custom Package" ${defaultPkg === 'Custom Package' ? 'selected' : ''}>Custom Package</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Package Rate ($ FJD)</label>
+        <input type="number" class="day-price" value="${defaultPrice}" oninput="updatePreview()">
+      </div>
+    `;
+    container.appendChild(div);
+    updatePreview();
+  }
+
+  function removeDayControl(id) {
+    const el = document.getElementById(`dayControl_${id}`);
+    if (el) el.remove();
+    updatePreview();
+  }
+
+  function onPkgChange(id) {
+    const card = document.getElementById(`dayControl_${id}`);
+    const pkgName = card.querySelector('.day-pkg').value;
+    const priceInput = card.querySelector('.day-price');
+    if (PACKAGES[pkgName]) {
+      priceInput.value = PACKAGES[pkgName].price;
+    }
+    updatePreview();
+  }
+
+  // Add Custom Add-on Control
+  function addAddonControl(data = null) {
+    addonCounter++;
+    const container = document.getElementById('addonContainer');
+    const div = document.createElement('div');
+    div.className = 'grid-2 form-group';
+    div.id = `addonControl_${addonCounter}`;
+    div.innerHTML = `
+      <input type="text" class="addon-desc" placeholder="e.g. Cold Spark Machine (2 Units)" value="${data ? data.desc : ''}" oninput="updatePreview()">
+      <div style="display:flex; gap:6px;">
+        <input type="number" class="addon-price" placeholder="Price ($)" value="${data ? data.price : ''}" oninput="updatePreview()">
+        <button class="btn btn-danger" onclick="removeAddonControl(${addonCounter})">X</button>
+      </div>
+    `;
+    container.appendChild(div);
+    updatePreview();
+  }
+
+  function removeAddonControl(id) {
+    const el = document.getElementById(`addonControl_${id}`);
+    if (el) el.remove();
+    updatePreview();
+  }
+
+  // Live Preview Update Logic
+  function updatePreview() {
+    document.getElementById('prevQuoteNo').innerText = document.getElementById('quoteNo').value;
+    document.getElementById('prevIssueDate').innerText = document.getElementById('issueDate').value || '--';
+    document.getElementById('prevValidDate').innerText = document.getElementById('validUntil').value || '--';
+    document.getElementById('prevName').innerText = document.getElementById('custName').value || 'Client Name';
+    document.getElementById('prevPhone').innerText = document.getElementById('custPhone').value || 'N/A';
+    document.getElementById('prevEventType').innerText = document.getElementById('eventType').value;
+    document.getElementById('prevVenue').innerText = document.getElementById('venue').value || 'N/A';
+
+    // Day Schedule Processing
+    const dayCards = document.querySelectorAll('.day-item-card');
+    const daysTbody = document.getElementById('prevDaysTable');
+    daysTbody.innerHTML = '';
+
+    let subtotal = 0;
+
+    if (dayCards.length === 0) {
+      daysTbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#94a3b8;">No event schedule added yet. Click "+ Add Day" above.</td></tr>';
+    } else {
+      dayCards.forEach((card, index) => {
+        const dateVal = card.querySelector('.day-date').value || 'TBD';
+        const timeVal = card.querySelector('.day-time').value || 'Full Event';
+        const pkgKey = card.querySelector('.day-pkg').value;
+        const priceVal = parseFloat(card.querySelector('.day-price').value) || 0;
+
+        subtotal += priceVal;
+
+        const pkgInfo = PACKAGES[pkgKey] || PACKAGES['Custom Package'];
+        const itemsList = pkgInfo.items.map(i => `• ${i}`).join(' ');
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>Day ${index + 1}</strong></td>
+          <td>${dateVal}<br><small style="color:#64748b;">${timeVal}</small></td>
+          <td>
+            <div class="pkg-title">${pkgKey}</div>
+            <div class="pkg-desc">${itemsList}</div>
+          </td>
+          <td style="text-align:right; font-weight:700;">$${priceVal.toFixed(2)}</td>
+        `;
+        daysTbody.appendChild(tr);
+      });
+    }
+
+    // Add-ons Processing
+    const addonDescs = document.querySelectorAll('.addon-desc');
+    const addonPrices = document.querySelectorAll('.addon-price');
+    const addonTbody = document.getElementById('prevAddonTable');
+    const addonSection = document.getElementById('prevAddonSection');
+    addonTbody.innerHTML = '';
+    let hasAddons = false;
+
+    addonDescs.forEach((descInput, index) => {
+      const desc = descInput.value.trim();
+      const price = parseFloat(addonPrices[index].value) || 0;
+      if (desc || price > 0) {
+        hasAddons = true;
+        subtotal += price;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${desc || 'Extra Equipment'}</td>
+          <td style="text-align:right; font-weight:600;">$${price.toFixed(2)}</td>
+        `;
+        addonTbody.appendChild(tr);
+      }
+    });
+
+    addonSection.style.display = hasAddons ? 'block' : 'none';
+
+    // Financial Calculation
+    const discount = parseFloat(document.getElementById('discountVal').value) || 0;
+    const total = Math.max(0, subtotal - discount);
+
+    const depositType = document.getElementById('depositType').value;
+    const fixedDepGroup = document.getElementById('fixedDepositGroup');
+    let deposit = 0;
+
+    if (depositType === 'fixed') {
+      fixedDepGroup.style.display = 'block';
+      deposit = parseFloat(document.getElementById('fixedDepositVal').value) || 0;
+    } else {
+      fixedDepGroup.style.display = 'none';
+      const pct = parseFloat(depositType) || 0;
+      deposit = total * (pct / 100);
+    }
+
+    const balance = Math.max(0, total - deposit);
+
+    document.getElementById('prevSubtotal').innerText = '$' + subtotal.toFixed(2);
+    if (discount > 0) {
+      document.getElementById('prevDiscountRow').style.display = 'flex';
+      document.getElementById('prevDiscount').innerText = '-$' + discount.toFixed(2);
+    } else {
+      document.getElementById('prevDiscountRow').style.display = 'none';
+    }
+
+    document.getElementById('prevTotal').innerText = '$' + total.toFixed(2);
+    document.getElementById('prevDeposit').innerText = '$' + deposit.toFixed(2);
+    document.getElementById('prevBalance').innerText = '$' + balance.toFixed(2);
+  }
+
+  // JSON Save Functionality
+  function saveAsJSON() {
+    const daysData = [];
+    document.querySelectorAll('.day-item-card').forEach(card => {
+      daysData.push({
+        date: card.querySelector('.day-date').value,
+        time: card.querySelector('.day-time').value,
+        package: card.querySelector('.day-pkg').value,
+        price: card.querySelector('.day-price').value
+      });
+    });
+
+    const addonsData = [];
+    document.querySelectorAll('.addon-desc').forEach((input, index) => {
+      addonsData.push({
+        desc: input.value,
+        price: document.querySelectorAll('.addon-price')[index].value
+      });
+    });
+
+    const data = {
+      quoteNo: document.getElementById('quoteNo').value,
+      issueDate: document.getElementById('issueDate').value,
+      validUntil: document.getElementById('validUntil').value,
+      custName: document.getElementById('custName').value,
+      custPhone: document.getElementById('custPhone').value,
+      eventType: document.getElementById('eventType').value,
+      venue: document.getElementById('venue').value,
+      discountVal: document.getElementById('discountVal').value,
+      depositType: document.getElementById('depositType').value,
+      fixedDepositVal: document.getElementById('fixedDepositVal').value,
+      days: daysData,
+      addons: addonsData
+    };
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${data.quoteNo || 'Quotation'}_${data.custName || 'Client'}.json`;
+    a.click();
+  }
+
+  // JSON Load Functionality
+  function loadFromJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (data.quoteNo) document.getElementById('quoteNo').value = data.quoteNo;
+        if (data.issueDate) document.getElementById('issueDate').value = data.issueDate;
+        if (data.validUntil) document.getElementById('validUntil').value = data.validUntil;
+        if (data.custName) document.getElementById('custName').value = data.custName;
+        if (data.custPhone) document.getElementById('custPhone').value = data.custPhone;
+        if (data.eventType) document.getElementById('eventType').value = data.eventType;
+        if (data.venue) document.getElementById('venue').value = data.venue;
+        if (data.discountVal !== undefined) document.getElementById('discountVal').value = data.discountVal;
+        if (data.depositType) document.getElementById('depositType').value = data.depositType;
+        if (data.fixedDepositVal !== undefined) document.getElementById('fixedDepositVal').value = data.fixedDepositVal;
+
+        // Clear existing days & add-ons
+        document.getElementById('dayControlsContainer').innerHTML = '';
+        document.getElementById('addonContainer').innerHTML = '';
+        dayCounter = 0;
+        addonCounter = 0;
+
+        if (data.days && data.days.length > 0) {
+          data.days.forEach(d => addDayControl(d));
+        } else {
+          addDayControl();
+        }
+
+        if (data.addons && data.addons.length > 0) {
+          data.addons.forEach(a => addAddonControl(a));
+        }
+
+        updatePreview();
+      } catch (err) {
+        alert("Invalid JSON quotation file.");
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  // Initialize
+  generateQuoteNo();
+  initDates();
+  addDayControl();
+</script>
+
+</body>
+</html>
